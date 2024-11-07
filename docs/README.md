@@ -1,8 +1,8 @@
 # Flask PWA - API Extension Task
 
-This task is to build a safe API that extends the [Flask PWA - Programming for the Web Task](https://github.com/TempeHS/Flask_PWA_Programming_For_The_Web_Task_Template). From the parent task, students will abstract the database and management to an API with key authentication. The PWA will then be retooled to GET request the data from the API and POST request data to to API. The PWA UI for the API will be rapidly prototyped using the [Bootstrap](https://getbootstrap.com/) frontend framework.
+This task is to build a safe API that extends the [Flask PWA - Programming for the Web Task](https://github.com/TempeHS/Flask_PWA_Programming_For_The_Web_Task_Template). From the parent task, students will abstract the database and management to an API with key authentication. The PWA will then be retooled to GET request the data from the API and POST request data to the API. The PWA UI for the API will be rapidly prototyped using the [Bootstrap](https://getbootstrap.com/) frontend framework.
 
-The focus of the API instructions are to model how to build and test an API incrementally. The focus of the PWA instructions are how to use the [Bootstrap](https://getbootstrap.com/) frontend framework to prototype an enhanced UI/UX frontend rapidly use [Bootstrap](https://getbootstrap.com/) components and classes.
+The API instructions focus on modelling how to build and test an API incrementally. The PWA instructions focus on using the [Bootstrap](https://getbootstrap.com/) frontend framework to prototype an enhanced UI/UX frontend rapidly using [Bootstrap](https://getbootstrap.com/) components and classes.
 
 > [!note]
 > The template for this project has been pre-populated with assets from the Flask PWA task, including the logo, icons and .database. Students can migrate their own assets if they wish.
@@ -38,7 +38,7 @@ The focus of the API instructions are to model how to build and test an API incr
 ## Instructions for building the API
 
 > [!Warning]
-> These instructions are less verbose than the parent task because students are expected to now be familiar with Bash, Flask & SQLite3.
+> These instructions are less verbose than the parent task because students are expected to be now familiar with Bash, Flask & SQLite3.
 
 ### Step 1: Learn the basics of implementing an API in Flask
 
@@ -91,8 +91,8 @@ Students can create files as they are needed. This structure defines the correct
 This Python implementation in 'api.py':
 
 1. Imports all the required dependencies for the whole project.
-2. Configures the 'Cross Origin Request' policy.
-3. Configures the rate limiter.
+2. Configure the 'Cross Origin Request' policy.
+3. Configure the rate limiter.
 4. Configure a route for the root `/` with a GET method to return stub data and a 200 response.
 5. Configure a route to /add_extension with a POST method to return stub data and a 201 response.
 
@@ -267,7 +267,7 @@ Update the `extension_add():` method in `database_manager.py` to validate the JS
 2. No extra properties are allowed.
 3. The data type for all 5 properties is string.
 4. The hyperlink pattern enforces the URL to start with `https://marketplace.visualstudio.com/items?itemName=`, and the characters `<` and `>` are not allowed to prevent XXS attacks.
-5. The image pattern requires https but `<` and `>` are not allowed to prevent XXS attacks.
+5. The image pattern requires https:// but `<` and `>` are not allowed to prevent XXS attacks.
 6. Languages must be enumerated with the list of languages.
 
 > [!Important]
@@ -294,12 +294,12 @@ schema = {
         "name": {"type": "string"},
         "hyperlink": {
             "type": "string",
-            "pattern": "^https:\\/\\/marketplace\\.visualstudio\\.com\\/items\\?itemName=(?!.*[<>])[a-zA-Z0-9\\-._~:\/?#\\[\\]@!$&'()*+,;=]*$",
+            "pattern": "^https:\\/\\/marketplace\\.visualstudio\\.com\\/items\\?itemName=(?!.*[<>])[a-zA-Z0-9-._~:\/?#\\[\\]@!$&'()*\\+,;=]*$",
         },
         "about": {"type": "string"},
         "image": {
             "type": "string",
-            "pattern": "^https:\\/\\/(?!.*[<>])[a-zA-Z0-9\\-._~:\/?#\\[\\]@!$&'()*+,;=]*$",
+            "pattern": "^https:\\/\\/(?!.*[<>])[a-zA-Z0-9-._~:\/?#\\[\\]@!$&'()*\\+,;=]*$",
         },
         "language": {
             "type": "string",
@@ -355,7 +355,7 @@ def extension_add(data):
 
 ### Step 12: Implement POST Authorisation
 
-[API Key Authorisation](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key) is a common method to authorise an application, site or project as in this scenario the API is not authorising a specific user. This is a very simple implementation of API Key Authorisation.
+[API Key Authorisation](https://cloud.google.com/endpoints/docs/openapi/when-why-api-key) is a common method for authorising an application, site, or project. In this scenario, the API is not authorising a specific user. This is a very simple implementation of API Key Authorisation.
 
 Extend the `api.py` to store the key as a variable. Students will need to generate a unique basic 16 secret key with [https://acte.ltd/utils/randomkeygen](https://acte.ltd/utils/randomkeygen).
 
@@ -363,7 +363,7 @@ Extend the `api.py` to store the key as a variable. Students will need to genera
 auth_key = "4L50v92nOgcDCYUM"
 ```
 
-Extend the `def post():` method in `api.py` to request the `authorisation` attribute from the post head compare it to the `auth_key` then process the appropriate response.
+Extend the `def post():` method in `api.py` to request the `authorisation` attribute from the post head, compare it to the `auth_key,` and process the appropriate response.
 
 ```python
 def post():
@@ -424,9 +424,10 @@ This Jinga2/HTML implementation in layout.html:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv=”Content-Security-Policy” content=” default-src 'self' ;
-    style-src 'self' ; script-src 'self' ; media-src 'self' ; font-src *;
-    frame-src 'self' ; connect-src * ; img-src 'self' ; ”>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="base-uri 'self'; default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' *; media-src 'self'; font-src 'self'; connect-src 'self'; object-src 'self'; worker-src 'self'; frame-src 'none'; form-action 'self'; manifest-src 'self'"
+    />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="static/css/style.css" />
@@ -621,7 +622,7 @@ Insert the basic HTML into index.html.
 This Python Flask implementation in `main.py`
 
 1. Imports all dependencies required for the whole project.
-2. Sets up CSRFProtect to provide asynchronous keys that protect the app from a CSRF attack. Students will need to generate a unique basic 16 secret key with [https://acte.ltd/utils/randomkeygen](https://acte.ltd/utils/randomkeygen).
+2. Set up CSRFProtect to provide asynchronous keys that protect the app from a CSRF attack. Students will need to generate a unique basic 16 secret key with [https://acte.ltd/utils/randomkeygen](https://acte.ltd/utils/randomkeygen).
 3. Defines the head attribute for authorising a POST request to the API.
 4. Define a secure Content Secure Policy (CSP) head.
 5. Configures the Flask app.
@@ -654,19 +655,23 @@ def root():
 
 @app.route("/", methods=["GET"])
 @csp_header(
-    {
+        {
+        "base-uri": "self",
         "default-src": "'self'",
-        "script-src": "'self'",
-        "img-src": "http: https: data:",
-        "object-src": "'self'",
         "style-src": "'self'",
+        "script-src": "'self'",
+        "img-src": "*",
         "media-src": "'self'",
+        "font-src": "self",
+        "object-src": "'self'",
         "child-src": "'self'",
         "connect-src": "'self'",
-        "base-uri": "",
+        "worker-src": "'self'",
         "report-uri": "/csp_report",
-        "frame-ancestors": "none",
-    }
+        "frame-ancestors": "'none'",
+        "form-action": "'self'",
+        "frame-src": "'none'",
+        }
 )
 def index():
     return render_template("/index.html")
@@ -740,7 +745,7 @@ def index():
     return render_template("index.html", data=data)
 ```
 
-Extend the html in 'index.html` template that:
+Replace the test html in 'index.html` template that:
 
 1. Implements a [Bootstrap jumbotron heading](https://getbootstrap.com/docs/5.3/examples/jumbotron/).
 2. Implements a [Bootstrap button group](https://getbootstrap.com/docs/5.3/components/button-group/) that will later allow users to filter the extensions by language.
@@ -906,9 +911,9 @@ The HTML Implementation in `add.html`
 Extend `main.py' to provide a route with POST and GET methods for `add.html` that
 
 1. Renders `add.html` on GET requests.
-2. On a POST method reads the form in add.html and constructs a JSON.
-3. Then posts the JSON with the header that includes the Authentication key to the API.
-4. Renders `add/html` with any errors or messages from the API.
+2. On a POST method, read the form in add.html and construct a JSON.
+3. Then, POST the JSON with the header that includes the Authentication key to the API.
+4. Render `add.html` with any errors or messages from the API.
 
 ```python
 @app.route("/add.html", methods=["POST", "GET"])
@@ -996,7 +1001,7 @@ logging.basicConfig(
 
 ## Extension activities to improve the API and PWA.
 
-1. Create a get_languages method the returns all the languages in the database.
+1. Create a get_languages method that returns all the languages in the database.
 2. Improve exception handling of the `add_extension` endpoint to give more detailed feedback to the user.
 3. Use the new get-languages method to define the content that renders in the PWA.
 4. Implement a sort extension by function
